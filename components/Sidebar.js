@@ -5,6 +5,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import SearchIcon from "@material-ui/icons/Search"
 import * as EmailValidator from "email-validator"
 
+// Firebae
+import { auth } from "../firebase"
+import { signOut } from "firebase/auth"
+
 const Sidebar = () => {
     const createChat = () => {
         const input = promp('Please enter an email address for the user you wish to chat with')
@@ -20,7 +24,7 @@ const Sidebar = () => {
     return (
         <Container>
             <Header>
-                <UserAvatar />
+                <UserAvatar onClick={() => signOut(auth)} />
 
                 <IconsContainer>
                     {/* Icon Button is use to make icon a clickable button with bubble effect */}
