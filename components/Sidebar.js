@@ -4,6 +4,7 @@ import ChatIcon from "@material-ui/icons/Chat"
 import MoreVertIcon from "@material-ui/icons/MoreVert"
 import SearchIcon from "@material-ui/icons/Search"
 import * as EmailValidator from "email-validator"
+import Chat from "./Chat"
 
 // Firebae
 import { auth, db } from "../firebase"
@@ -39,7 +40,7 @@ const Sidebar = () => {
     return (
         <Container>
             <Header>
-                <UserAvatar onClick={() => signOut(auth)} />
+                <UserAvatar onClick={() => signOut(auth)} src={user.photoURL} />
 
                 <IconsContainer>
                     {/* Icon Button is use to make icon a clickable button with bubble effect */}
@@ -60,6 +61,9 @@ const Sidebar = () => {
             </SideBarButton>
 
             {/* List of Chats Chats */}
+            {chatSnapShot?.docs.map(chat => (
+                <Chat key={chat.id} id={chat.id} users={chat.data().users} />
+            ))}
         </Container>
     )
 }
