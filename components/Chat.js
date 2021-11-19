@@ -17,6 +17,8 @@ function Chat({ id, users }) {
     )
     const reciptent = reciptentSnapShot?.docs?.[0]?.data()
 
+
+
     const reciptentEmail = getReciptentEmail(users, user)
 
 
@@ -28,7 +30,7 @@ function Chat({ id, users }) {
     return (
         <Container onClick={enterChat}>
             {reciptent ? (
-                <UserAvatar src={reciptent?.photoURL} />
+                <UserAvatar src={reciptent?.photoUrl} />
             ) :
                 <UserAvatar>{reciptentEmail[0]}</UserAvatar>
             }

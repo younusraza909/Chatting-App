@@ -80,7 +80,7 @@ function ChatScreen({ chat, messages }) {
         <Container>
             <Header >
                 {reciptent ? (
-                    <Avatar src={reciptent?.photoURL} />
+                    <Avatar src={reciptent?.photoUrl} />
                 ) :
                     <Avatar>{reciptentEmail[0]}</Avatar>
                 }
