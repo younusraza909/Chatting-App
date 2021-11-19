@@ -16,10 +16,10 @@ import MoreVertIcon from "@material-ui/icons/MoreVert"
 import InsertEmoticonIcon from "@material-ui/icons/InsertEmoticon"
 import AttachFileIcon from "@material-ui/icons/AttachFile"
 import MicIcon from "@material-ui/icons/Mic"
-import { useState } from "react"
+import { useState, useRef } from "react"
 
 function ChatScreen({ chat, messages }) {
-
+    const endOfMessagesRef = useRef(null)
     const [user] = useAuthState(auth)
     const [input, setInput] = useState('')
     const router = useRouter()
@@ -39,13 +39,14 @@ function ChatScreen({ chat, messages }) {
                     message={
                         {
                             ...msg.data(),
-                            timestamp: msg.timestamp?.toDate().getTime()
+                            timestamp: msg?.timestamp?.toDate().getTime()
                         }
                     }
                 />
             ))
-        } else {
-            return JSON.parse(messages).map(msg => {
+        }
+        else {
+            return JSON.parse(messages).map(msg => (
                 <Message
                     key={msg.id}
                     user={msg.user}
@@ -53,8 +54,15 @@ function ChatScreen({ chat, messages }) {
                         msg
                     }
                 />
-            })
+            ))
         }
+    }
+
+    const ScrollToBottom = () => {
+        endOfMessagesRef.current.scrollIntoView({
+            behavior: "smooth",
+            block: 'start'
+        })
     }
 
     const sendMessage = async (e) => {
@@ -71,6 +79,7 @@ function ChatScreen({ chat, messages }) {
         })
 
         setInput('');
+        ScrollToBottom()
     }
 
     const reciptentEmail = getReciptentEmail(chat.users, user)
@@ -110,7 +119,7 @@ function ChatScreen({ chat, messages }) {
             </Header>
             <MessageContainer>
                 {showMessages()}
-                <EndMessage />
+                <EndMessage ref={endOfMessagesRef} />
             </MessageContainer>
 
             <InputContainer>
@@ -179,6 +188,7 @@ const HeaderInfo = styled.div`
 const HeaderIcons = styled.div``
 
 const EndMessage = styled.div`
+    margin-bottom: 50px;
 `
 
 const MessageContainer = styled.div`
