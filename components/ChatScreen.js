@@ -1,5 +1,6 @@
 import styled from "styled-components"
 import Message from "./Message"
+import getReciptentEmail from "../utils/getReciptentEmail"
 
 import { useAuthState } from "react-firebase-hooks/auth"
 import { useCollection } from "react-firebase-hooks/firestore"
@@ -17,6 +18,7 @@ import MicIcon from "@material-ui/icons/Mic"
 import { useState } from "react"
 
 function ChatScreen({ chat, messages }) {
+
     const [user] = useAuthState(auth)
     const [input, setInput] = useState('')
     const router = useRouter()
@@ -67,13 +69,15 @@ function ChatScreen({ chat, messages }) {
         setInput('');
     }
 
+    const reciptentEmail = getReciptentEmail(chat.users, user)
+
 
     return (
         <Container>
             <Header >
                 <Avatar />
                 <HeaderInfo>
-                    <h3>Rec Email</h3>
+                    <h3>{reciptentEmail}</h3>
                     <p>Last seen..</p>
                 </HeaderInfo>
                 <HeaderIcons>

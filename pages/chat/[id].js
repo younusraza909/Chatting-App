@@ -31,8 +31,6 @@ export default Chat
 export async function getServerSideProps(context) {
     const ref = doc(db, 'chats', context.query.id)
 
-
-
     // Prep Messages
     const messageQuery = query(collection(db, 'chats', context.query.id, 'messages'), orderBy('timestamp', 'asc'))
     const messagesRef = await getDocs(messageQuery)
