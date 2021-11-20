@@ -32,18 +32,25 @@ function ChatScreen({ chat, messages }) {
 
     const showMessages = () => {
         if (messageSnapShot) {
-            return messageSnapShot.docs.map(msg => (
-                <Message
-                    key={msg.id}
-                    user={msg.data().user}
-                    message={
-                        {
-                            ...msg.data(),
-                            timestamp: msg?.timestamp?.toDate().getTime()
+
+            return messageSnapShot.docs.map(msg => {
+                //  new Date(msg.data().timestamp.seconds * 1000)
+                // Sometime you get timestamp from  server as {second:*,nanosecond:*}
+                // So we can use above line formula to covnert
+                return (
+                    <Message
+                        key={msg.id}
+                        user={msg.data().user}
+                        message={
+                            {
+                                ...msg.data(),
+                                timestamp: new Date(msg.data().timestamp.seconds * 1000)
+                            }
                         }
-                    }
-                />
-            ))
+                    />
+                )
+
+            })
         }
         else {
             return JSON.parse(messages).map(msg => (
@@ -97,7 +104,7 @@ function ChatScreen({ chat, messages }) {
                     <h3>{reciptentEmail}</h3>
                     {
                         reciptentSnapShot ? (
-                            <p>Last Active ...{" "}
+                            <p>Last Active {" "}
                                 {reciptent?.lastSeen?.toDate() ? (
                                     <Moment fromNow>{reciptent?.lastSeen?.toDate()}</Moment>
                                 ) : "Unavialable"}

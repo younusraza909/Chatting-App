@@ -40,7 +40,7 @@ const Sidebar = () => {
     return (
         <Container>
             <Header>
-                <UserAvatar onClick={() => signOut(auth)} src={user.photoURL} />
+                <UserAvatar onClick={() => signOut(auth)} src={user?.photoURL} />
 
                 <IconsContainer>
                     {/* Icon Button is use to make icon a clickable button with bubble effect */}
